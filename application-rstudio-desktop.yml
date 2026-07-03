@@ -63,11 +63,14 @@
           - r-recommended
         state: present
 
+    - name: Download RStudio deb
+      ansible.builtin.get_url:
+        url: "{{ rstudio_deb_url }}"
+        dest: /tmp/rstudio.deb
+        mode: "0644"
+
     - name: Install RStudio on Debian-based systems
-        apt:
-          deb: "{{ rstudio_deb_url }}"
-          state: present
-
-
-
+      ansible.builtin.apt:
+        deb: /tmp/rstudio.deb
+        state: present
 
