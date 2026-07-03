@@ -32,7 +32,6 @@ miniconda:
   - scipy
   - pandas
   - polars
-  - scikit
   - scikit-learn
   - jupyterlab
   # to create ipython-kernels you will always need the package ipykernel
