@@ -29,7 +29,7 @@
 
     - name: Create desktop entry for JupyterLab
       ansible.builtin.copy:
-        dest: /usr/shares/applications/jupyterlab.desktop
+        dest: /usr/share/applications/jupyterlab.desktop
         mode: "0644"
         content: |
           [Desktop Entry]
