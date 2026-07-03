@@ -19,11 +19,11 @@
       ansible.builtin.copy:
         dest: "/usr/local/bin/{{ launcher_script }}"
         mode: "0755"
-        content:
+        content: |
           #!/usr/bin/env bash
           set -euo pipefail
-          source "{{ conda_root }}/etc/profile.d/conda.sh"
-          conda activate "{{ conda_env_name }}"
+          source {{ conda_root }}/etc/profile.d/conda.sh
+          conda activate {{ conda_env_name }}
           cd "$HOME"
           exec jupyter-lab
 
