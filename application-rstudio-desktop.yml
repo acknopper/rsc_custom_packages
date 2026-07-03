@@ -1,0 +1,73 @@
+---
+- name: Install desktop version of R-Studio in linux
+  hosts: localhost
+  gather_facts: true
+  become: true
+
+  vars:
+    rstudio_deb_url: "https://download1.rstudio.org/electron/jammy/amd64/rstudio-2026.06.0-242-amd64.deb"
+
+
+  tasks:
+    - name: Wait for system to become reachable
+      wait_for_connection:
+        timeout: 300
+
+      - name: Install debian packages
+      package:
+        name:
+          - apt-transport-https
+          - dpkg-sig
+          - gdebi-core
+          - make
+          - pandoc
+          - libxml2-dev
+          - build-essential
+          - libssl-dev
+          - libfontconfig1-dev
+          - libicu-dev
+          - libcurl4-openssl-dev
+          - libfreetype6-dev
+          - libfribidi-dev
+          - libharfbuzz-dev
+          - libjpeg-dev
+          - libpng-dev
+          - libtiff-dev
+          - libproj-dev
+          - libnetcdf-dev
+          - libnetcdff-dev
+          - netcdf-bin
+          - git
+
+    - name: Add CRAN signing key
+      ansible.builtin.get_url:
+        url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
+        dest: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+        mode: "0644"
+
+    - name: Add CRAN repository for Ubuntu
+      ansible.builtin.apt_repository:
+        repo: "deb https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/"
+        filename: cran-r
+        state: present
+
+    - name: Update apt cache after CRAN repo
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Install R
+      ansible.builtin.apt:
+        name:
+          - r-base
+          - r-base-dev
+          - r-recommended
+        state: present
+
+    - name: Install RStudio on Debian-based systems
+        apt:
+          deb: "{{ rstudio_deb_url }}"
+          state: present
+
+
+
+

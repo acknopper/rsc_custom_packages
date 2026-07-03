@@ -1,0 +1,46 @@
+---
+- name: Create JupyterLab desktop and menu launchers
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: Wait for system to become reachable
+      wait_for_connection:
+        timeout: 300
+
+  vars:
+    conda_root: /etc/miniconda
+    conda_env_name: custom-kernel
+    launcher_script: "start_jupyterlab.sh"
+
+  tasks:
+    - name: Create JupyterLab wrapper script
+      ansible.builtin.copy:
+        dest: "{{ launcher_script }}"
+        mode: "0755"
+        content:
+          #!/usr/bin/env bash
+          set -euo pipefail
+          source "{{ conda_root }}/etc/profile.d/conda.sh"
+          conda activate "{{ conda_env_name }}"
+          cd "$HOME"
+          exec jupyter-lab
+
+    - name: Create desktop entry for JupyterLab
+      ansible.builtin.copy:
+        dest: /usr/shares/applications/jupyterlab.desktop
+        mode: "0644"
+        content: |
+          [Desktop Entry]
+          Version=1.0
+          Type=Application
+          Name=JupyterLab
+          Comment=Start JupyterLab in conda env custom-env
+          Exec="/usr/local/bin/{{ launcher_script }}"
+          Terminal=false
+          Icon=jupyterlab
+          Categories=Development;Education;
+          StartupNotify=true
+
+
