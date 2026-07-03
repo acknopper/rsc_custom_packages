@@ -17,7 +17,7 @@
   tasks:
     - name: Create JupyterLab wrapper script
       ansible.builtin.copy:
-        dest: "{{ launcher_script }}"
+        dest: "/usr/local/bin/{{ launcher_script }}"
         mode: "0755"
         content:
           #!/usr/bin/env bash
