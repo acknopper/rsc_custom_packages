@@ -1,13 +1,13 @@
 ---
 available_versions:
   4.6.1:
-    package: 4-6.1-1.2204.1
+    package: 4.6.1-1.2204.1
     repo: deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/
     env: 4.6
     deb: https://download1.rstudio.org/electron/jammy/amd64/rstudio-2026.06.0-242-amd64.deb
     cran_url: https://packagemanager.posit.co/cran/__linux__/jammy/latest
   4.6.0:
-    package: 4-6.0-4.2204.0
+    package: 4.6.0-4.2204.0
     repo: deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/
     env: 4.6
     deb: https://download1.rstudio.org/electron/jammy/amd64/rstudio-2026.06.0-242-amd64.deb
