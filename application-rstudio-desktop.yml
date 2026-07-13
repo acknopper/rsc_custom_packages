@@ -36,11 +36,11 @@
           - netcdf-bin
           - git
 
-    - name: Add CRAN signing key
-      ansible.builtin.get_url:
-        url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
-        dest: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-        mode: "0644"
+    # - name: Add CRAN signing key
+    #   ansible.builtin.get_url:
+    #     url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
+    #     dest: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+    #     mode: "0644"
 
     - name: Add CRAN repository for Ubuntu
       ansible.builtin.apt_repository:
