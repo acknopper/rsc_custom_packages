@@ -40,7 +40,12 @@
     #   ansible.builtin.get_url:
     #     url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
     #     dest: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-    #     mode: "0644"
+    #     mode: "0644
+
+    - name: Add an apt key by id from a keyserver
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: E298A3A825C0D65DFD57CBB651716619E084DAB9
 
     - name: Add CRAN repository for Ubuntu
       ansible.builtin.apt_repository:
