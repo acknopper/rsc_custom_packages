@@ -50,12 +50,12 @@
         state: present
 
     - name: Ensure r-base and r-base-dev are installed
-          package:
-            name:
-              - r-recommended={{ available_versions[r_version]['package'] }}
-              - r-base={{ available_versions[r_version]['package'] }}
-              - r-base-dev={{ available_versions[r_version]['package'] }}
-            state: present
+      package:
+        name:
+          - r-recommended={{ available_versions[r_version]['package'] }}
+          - r-base={{ available_versions[r_version]['package'] }}
+          - r-base-dev={{ available_versions[r_version]['package'] }}
+        state: present
 
     # - name: Update apt cache after CRAN repo
     #   ansible.builtin.apt:
