@@ -36,12 +36,6 @@
           - netcdf-bin
           - git
 
-    # - name: Add CRAN signing key
-    #   ansible.builtin.get_url:
-    #     url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
-    #     dest: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-    #     mode: "0644
-
     - name: Add an apt key by id from a keyserver
       apt_key:
         keyserver: keyserver.ubuntu.com
@@ -49,8 +43,6 @@
 
     - name: Add CRAN repository for Ubuntu
       ansible.builtin.apt_repository:
-        #repo: "deb https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/"
-        #filename: cran-r
         repo: "{{ available_versions[r_version]['repo'] }}"
         state: present
 
@@ -61,18 +53,6 @@
           - r-base={{ available_versions[r_version]['package'] }}
           - r-base-dev={{ available_versions[r_version]['package'] }}
         state: present
-
-    # - name: Update apt cache after CRAN repo
-    #   ansible.builtin.apt:
-    #     update_cache: true
-
-    # - name: Install R
-    #   ansible.builtin.apt:
-    #     name:
-    #       - r-base
-    #       - r-base-dev
-    #       - r-recommended
-    #     state: present
 
     - name: Download RStudio deb
       ansible.builtin.get_url:
