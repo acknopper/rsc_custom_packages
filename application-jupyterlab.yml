@@ -13,6 +13,18 @@
     conda_root: /etc/miniconda
     conda_env_name: custom-kernel
     launcher_script: "start_jupyterlab.sh"
+    hosts_entries:
+      - { ip: "104.19.144.37", name: "conda.anaconda.org" }
+      - { ip: "104.19.145.37", name: "conda.anaconda.org" }
+      - { ip: "104.16.32.241", name: "repo.anaconda.com" }
+      - { ip: "104.16.191.158", name: "repo.anaconda.com" }
+      - { ip: "151.101.0.223", name: "pypi.org" }
+      - { ip: "151.101.64.223", name: "pypi.org" }
+      - { ip: "151.101.128.223", name: "pypi.org" }
+      - { ip: "18.239.18.73", name: "cloud.r-project.org" }
+      - { ip: "18.239.18.61", name: "cloud.r-project.org" }
+      - { ip: "18.239.18.39", name: "cloud.r-project.org" }
+      - { ip: "18.239.18.118", name: "cloud.r-project.org" }
 
   tasks:
     - name: Create JupyterLab wrapper script
@@ -43,4 +55,14 @@
           Categories=Development;Education;
           StartupNotify=true
 
-
+    - name: Ensure /etc/hosts contains required entries
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        create: false
+        state: present
+        # add hosts for conda/pypi/cran channels
+        search_string: "{{ item.name }}"
+        line: >-
+          {{ item.ip }}
+          {{ item.name }}
+      loop: "{{ hosts_entries }}"
